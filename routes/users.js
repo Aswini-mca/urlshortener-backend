@@ -188,21 +188,10 @@ router.post('/reset-password/:token', async (req, res) => {
       return res.json({ message: 'Password reset successful' });
     }
 
-
   }
   catch (error) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 })
-
-
-
-
-
-
-
-
-
-
 
 export const UsersRouter = router

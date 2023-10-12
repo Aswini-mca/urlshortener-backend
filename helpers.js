@@ -22,7 +22,7 @@ async function getUserByToken(activateToken){
 }
 
 async function updateTokenStatus(token) {
-    return await client.db("FSD").collection("urlusers").updateOne({ _id: token._id }, { $set: { isActivated:true } })
+    return await client.db("FSD").collection("urlusers").updateOne({ _id: token._id }, { $set: { isActivated:true,activateToken:null } })
 }
 
 function genToken() {
@@ -42,5 +42,12 @@ async function updateNewPassword(resetToken, hashedPassword) {
     return await client.db("FSD").collection("urlusers").updateOne({ _id: resetToken._id }, { $set: { password: hashedPassword, resetToken: null, resetTokenExpiresAt: null } })
 }
 
+async function createUrl(longUrl,shortUrl){
+    return await client.db("FSD").collection("url").insertOne({longUrl,shortUrl,Date:new Date(),clickCount:0})
+}
 
-export { genPassword, createUser, getUserByName,getUserByToken,updateTokenStatus,genToken,storeResetToken,getUserByResetToken,updateNewPassword}
+async function getUrl(shortUrl){
+    return await client.db("FSD").collection("url").findOne({shortUrl:shortUrl})
+}
+
+export { genPassword, createUser, getUserByName,getUserByToken,updateTokenStatus,genToken,storeResetToken,getUserByResetToken,updateNewPassword,createUrl,getUrl}

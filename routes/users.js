@@ -26,6 +26,19 @@ router.post('/registration', async (req, res) => {
       res.status(400).send({ error: "password pattern does not match" })
       return
     }
+
+    //validate firstname
+    if(!firstname){
+      res.status(400).send({ error: "first name required" })
+      return
+    }
+
+    //validate lastname
+    if(!lastname){
+      res.status(400).send({ error: "last name required" })
+      return
+    }
+
     const hashedPassword = await genPassword(password)
     const token = jwt.sign({username},process.env.secret_key)
     const result = await createUser(username,firstname,lastname,hashedPassword,token)

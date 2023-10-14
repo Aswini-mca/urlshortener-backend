@@ -46,8 +46,8 @@ async function createUrl(longUrl,shortUrl){
     return await client.db("FSD").collection("url").insertOne({longUrl,shortUrl,Date:new Date(),clickCount:0})
 }
 
-async function getUrl(shortUrl){
-    return await client.db("FSD").collection("url").findOne({shortUrl:shortUrl})
+async function getUrl(longUrl){
+    return await client.db("FSD").collection("url").findOne({longUrl:longUrl})
 }
 
 export { genPassword, createUser, getUserByName,getUserByToken,updateTokenStatus,genToken,storeResetToken,getUserByResetToken,updateNewPassword,createUrl,getUrl}

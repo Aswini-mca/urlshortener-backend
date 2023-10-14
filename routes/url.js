@@ -4,12 +4,22 @@ const router = express.Router()
 
 router.post('/create-short-url',async(req,res)=>{
   const {longUrl} = req.body
+  const isLongUrl = await getUrl(longUrl)
 
+  //validate longurl
+  if(!longUrl){
+    res.status(400).send({ error: "long url required" })
+    return
+  }
+  if(isLongUrl){
+    res.status(400).send({ error: "Url already shorted" })
+    return
+  }
   //generate shorturl
   function genShortUrl(){
-    const character ='aBcDefghijklmnopqrstuvwxyz0123456789'
-    let shortUrl='http:'
-    for(let i=0;i<3;i++){
+    const character ='aBcDefG'
+    let shortUrl='https://short'
+    for(let i=0;i<=3;i++){
       shortUrl = shortUrl+character[i]+(Math.floor(Math.random()*9+1))
     }
     return shortUrl;
@@ -17,7 +27,7 @@ router.post('/create-short-url',async(req,res)=>{
   const shortUrl = genShortUrl()
   const url = await createUrl(longUrl,shortUrl)
 
-  res.status(201).json({ message: "short url created successfully"})
+  res.status(201).json({ message: "short url created successfully",shortUrl})
 })
 
 router.get('/short-url/:shortUrl',async(req,res)=>{

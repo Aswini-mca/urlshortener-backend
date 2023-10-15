@@ -46,8 +46,31 @@ async function createUrl(longUrl,shortUrl){
     return await client.db("FSD").collection("url").insertOne({longUrl,shortUrl,Date:new Date(),clickCount:0})
 }
 
-async function getUrl(longUrl){
-    return await client.db("FSD").collection("url").findOne({longUrl:longUrl})
+async function getShortUrl(shortUrl){
+    return await client.db("FSD").collection("url").findOne({shortUrl:shortUrl})
 }
 
-export { genPassword, createUser, getUserByName,getUserByToken,updateTokenStatus,genToken,storeResetToken,getUserByResetToken,updateNewPassword,createUrl,getUrl}
+async function updateCount(shortUrlId) {
+    return await client.db("FSD").collection("url").updateOne({ _id: shortUrlId }, { $inc: { clickCount: 1 } })
+}
+
+async function getAllUrls(req){
+    return await client.db("FSD").collection("url").find().toArray()
+}
+
+async function totalUrlsPerDay(req){
+    return await client.db("FSD").collection("url").aggregate([
+        {
+          $group: {
+            _id: {
+              year: { $year: '$Date' },
+              month: { $month: '$Date' },
+              day: { $dayOfMonth: '$Date' },
+            },
+            total: { $sum: 1 },
+          },
+        },
+      ]).toArray();
+}
+
+export { genPassword, createUser, getUserByName,getUserByToken,updateTokenStatus,genToken,storeResetToken,getUserByResetToken,updateNewPassword,createUrl,getShortUrl,updateCount,getAllUrls,totalUrlsPerDay}

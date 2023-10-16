@@ -15,7 +15,7 @@ router.post('/create-short-url',async(req,res)=>{
   //generate shorturl
   function genShortUrl(){
     const character ='aBcDefG'
-    let shortUrl='https:'
+    let shortUrl=''
     for(let i=0;i<3;i++){
       shortUrl = shortUrl+character[i]+(Math.floor(Math.random()*9+1))
     }

@@ -60,7 +60,7 @@ router.post('/registration', async (req, res) => {
       to: username,
       subject: "Account Activation Link",
       text: `Account activation${token}`,
-      html: `<h2>Your requested for activation <a href='http://localhost:3000/activation/${token}'>http://localhost:3000/activation/${token}</a> click this link to active your account</h2>`
+      html: `<h2>Your requested for activation <a href='https://cosmic-pudding-d7eb99.netlify.app/activation/${token}'>https://cosmic-pudding-d7eb99.netlify.app/activation/${token}</a> click this link to active your account</h2>`
     };
   
     transporter.sendMail(sendEmail, (err, info) => {
@@ -147,7 +147,7 @@ router.post('/forget-password', async (req, res) => {
     to: username,
     subject: "Password Reset Link",
     text: `random string is${resetToken}`,
-    html: `<h2>The link for reset your password will expire in 1 hour.<a href='http://localhost:3000/reset-password/${resetToken}'>http://localhost:3000/reset-password/${resetToken}</a></h2>`
+    html: `<h2>The link for reset your password will expire in 1 hour.<a href='https://cosmic-pudding-d7eb99.netlify.app/reset-password/${resetToken}'>https://cosmic-pudding-d7eb99.netlify.app/reset-password/${resetToken}</a></h2>`
   };
 
   transporter.sendMail(sendEmail, (err, info) => {

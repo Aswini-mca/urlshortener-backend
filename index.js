@@ -4,6 +4,7 @@ import cors from 'cors';
 import 'dotenv/config'
 import { UsersRouter } from './routes/users.js';
 import { UrlRouter } from './routes/url.js'; 
+import { getShortUrl } from './helpers.js';
 
 const app = express()
 const PORT = 9000;
@@ -27,6 +28,26 @@ export const client = await createConnection()
 
 app.get('/',(req,res)=>{
     res.send('URL Shortener Application')
+})
+
+app.get('/:shortUrl',async(req,res)=>{
+    try{
+        const shortUrl = req.params.shortUrl
+        const url = await getShortUrl(shortUrl)
+     
+        //short url is there redirect to long url
+        if(url){
+         return res.redirect(url.longUrl)
+        }
+       
+        else{
+         return res.status(404).json({ error:"Short url not found"})
+       }
+       }
+       
+       catch(error){
+         return res.status(500).json({ message: 'Internal Server Error' });
+       }
 })
 
 app.use('/users',UsersRouter)

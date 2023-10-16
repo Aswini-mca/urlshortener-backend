@@ -2,6 +2,7 @@ import express from 'express';
 import { createUrl, getShortUrl,updateCount,getAllUrls,totalUrlsPerDay} from '../helpers.js';
 const router = express.Router()
 
+//Api to create short url
 router.post('/create-short-url',async(req,res)=>{
   const {longUrl} = req.body
 
@@ -26,6 +27,7 @@ router.post('/create-short-url',async(req,res)=>{
   res.status(201).json({ message: "short url created successfully",shortUrl})
 })
 
+//Api to update click count
 router.post('/short-url/:shortUrl',async(req,res)=>{
   try{
    const shortUrl = req.params.shortUrl
@@ -47,6 +49,7 @@ router.post('/short-url/:shortUrl',async(req,res)=>{
   }
 })
 
+//Api to get all urls
 router.get('/get-all-urls',async(req,res)=>{
   
   const getAllUrlsFromDb = await getAllUrls(req)

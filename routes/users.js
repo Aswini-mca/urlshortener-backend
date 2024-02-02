@@ -21,12 +21,6 @@ router.post('/registration', async (req, res) => {
       return
     }
   
-    //validate password pattern
-    if (!/^(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[#!@%$_]).{8,}$/g.test(password)) {
-      res.status(400).send({ error: "password pattern does not match" })
-      return
-    }
-
     //validate firstname
     if(!firstname){
       res.status(400).send({ error: "first name required" })
@@ -36,6 +30,12 @@ router.post('/registration', async (req, res) => {
     //validate lastname
     if(!lastname){
       res.status(400).send({ error: "last name required" })
+      return
+    }
+
+    //validate password pattern
+    if (!/^(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[#!@%$_]).{8,}$/g.test(password)) {
+      res.status(400).send({ error: "password pattern does not match" })
       return
     }
 
@@ -60,7 +60,7 @@ router.post('/registration', async (req, res) => {
       to: username,
       subject: "Account Activation Link",
       text: `Account activation${token}`,
-      html: `<h2>Your requested for activation <a href='https://incredible-scone-98d7d6.netlify.app/activation/${token}'>https://incredible-scone-98d7d6.netlify.app/activation/${token}</a> click this link to active your account</h2>`
+      html: `<h2>Your requested for activation <a href='https://cosmic-pudding-d7eb99.netlify.app/activation/${token}'>https://cosmic-pudding-d7eb99.netlify.app/activation/${token}</a> click this link to active your account</h2>`
     };
   
     transporter.sendMail(sendEmail, (err, info) => {
@@ -147,7 +147,7 @@ router.post('/forget-password', async (req, res) => {
     to: username,
     subject: "Password Reset Link",
     text: `random string is${resetToken}`,
-    html: `<h2>The link for reset your password will expire in 1 hour.<a href='https://incredible-scone-98d7d6.netlify.app/reset-password/${resetToken}'>https://incredible-scone-98d7d6.netlify.app/reset-password/${resetToken}</a></h2>`
+    html: `<h2>The link for reset your password will expire in 1 hour.<a href='https://cosmic-pudding-d7eb99.netlify.app/reset-password/${resetToken}'>https://cosmic-pudding-d7eb99.netlify.app/reset-password/${resetToken}</a></h2>`
   };
 
   transporter.sendMail(sendEmail, (err, info) => {
